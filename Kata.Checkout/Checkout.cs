@@ -12,11 +12,11 @@ public class Checkout : ICheckout
         _items = new List<CheckoutItem>();  
     }
 
-    public decimal Total => throw new NotImplementedException();
+    public decimal Total => _items.Sum(i => i.TotalValue);
 
     public void ScanItem(string SKU)
     {
-        _items.Add(new CheckoutItem(SKU, 1, 0.00M));
+        _items.Add(new CheckoutItem(SKU, 1, 10.00M));
     }
 }
 
