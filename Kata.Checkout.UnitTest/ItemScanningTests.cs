@@ -1,5 +1,6 @@
 ﻿namespace Kata.Checkout.UnitTest;
 using Xunit;
+using Moq;
 
 /// <summary>
 /// A set of tests focused on the behaviour of item scanning
@@ -10,10 +11,18 @@ using Xunit;
 /// present scope the lack of testability could become a headache.</remarks>
 public class ItemScanningTests
 {
+    private static Checkout CheckoutFactory()
+    {
+        var mock = new Mock<IPricer>();
+        mock.Setup(p => p.PriceItem(It.IsAny<string>(), It.IsAny<uint>())).Returns(10.54M);
+        IPricer pricer = mock.Object;
+        return new Checkout(pricer);
+    }
+
     [Fact]
     public void CanScanAnItem()
     {
-        var checkout = new Checkout();
+        var checkout = CheckoutFactory();
 
         checkout.ScanItem("123456");
     }
@@ -21,7 +30,7 @@ public class ItemScanningTests
     [Fact]
     public void CanScanMultipleOfTheSameItem()
     {
-        var checkout = new Checkout();
+        var checkout = CheckoutFactory();
 
         checkout.ScanItem("123456");
         checkout.ScanItem("123456");
@@ -30,7 +39,7 @@ public class ItemScanningTests
     [Fact]
     public void CanScanMultipleDifferentItems()
     {
-        var checkout = new Checkout();
+        var checkout = CheckoutFactory();
 
         checkout.ScanItem("123456");
         checkout.ScanItem("789012");
