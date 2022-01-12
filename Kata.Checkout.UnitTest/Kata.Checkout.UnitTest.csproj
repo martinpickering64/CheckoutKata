@@ -20,4 +20,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Kata.Checkout\Kata.Checkout.csproj" />
+  </ItemGroup>
+
 </Project>
